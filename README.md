@@ -1,23 +1,55 @@
-# AK INTERIOR DESIGN
+# AK INTERIOR DESIGN — GitHub + Supabase + Direct Media Upload
 
-This is a functional front-end starter/prototype for the requested website.
+## Features
+### Customer
+- Public website without login
+- Services
+- Projects
+- Completed projects
+- Photo/video gallery
+- Contact section
 
-## Included
-- Public customer website
-- Responsive Home, Services, Projects, Gallery, Completed Projects, About and Contact sections
-- Manager login
-- Manager dashboard
-- Project add/delete
-- Photo/video URL add/delete
-- Worker add/delete
+### Manager
+- Supabase email/password login
+- Dashboard
+- Add/delete projects
+- **Direct photo upload**
+- **Direct video upload**
+- Delete uploaded media
+- Worker records
 - Worker payment records
-- Data persistence with browser localStorage
 
-## Demo login
-Username: akash_sharma9939
-Password: akash9939
+## Setup
+1. Create a Supabase project.
+2. Open Supabase -> SQL Editor.
+3. Run `supabase.sql`.
+4. Supabase -> Authentication -> Users -> Add user.
+5. Create your manager email/password.
+6. Open `index.html`.
+7. Replace:
+   `YOUR_SUPABASE_URL`
+   `YOUR_SUPABASE_ANON_KEY`
+8. Upload `index.html` and `supabase.sql` to GitHub.
+9. GitHub -> Settings -> Pages -> Deploy from branch -> main -> root.
 
-## Important
-This starter runs entirely in the browser. It is NOT production-secure authentication and does not provide real server-side file storage.
+## Direct media upload
+Manager Dashboard -> Photos / Videos:
+1. Enter title.
+2. Select Photo or Video.
+3. Choose file.
+4. Click Upload File.
+5. The file is uploaded to Supabase Storage bucket `ak-media`.
+6. A public media record is saved in the `media` table.
+7. Customer gallery automatically reads that record.
+8. Delete removes the database record and the Storage file when its URL belongs to the `ak-media` bucket.
 
-For production, the next implementation should replace localStorage with PostgreSQL (or Supabase), add secure server-side authentication, role permissions, image/video storage, real uploads, validation, backups, and deployment.
+Limits in the starter:
+- Photo: 15 MB
+- Video: 100 MB
+
+You can change these limits in `uploadMediaFile()`.
+
+## Important security note
+Do NOT put the Supabase service-role/secret key in `index.html`. Only use the public publishable/anon key.
+
+For a production business site, restrict manager access to an approved manager account/role instead of allowing every authenticated Supabase user to access admin tables.

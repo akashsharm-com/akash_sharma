@@ -1,139 +1,124 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<!doctype html>
+<html lang="en"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
 <title>AK INTERIOR DESIGN</title>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <style>
-:root{--bg:#f6f3ee;--card:#fff;--text:#1f1f1f;--muted:#777;--accent:#8b5e3c;--dark:#24211f;--border:#e7e1da}
-*{box-sizing:border-box}body{margin:0;font-family:Arial,Helvetica,sans-serif;background:var(--bg);color:var(--text)}
-button,input,select,textarea{font:inherit}button{cursor:pointer}.hidden{display:none!important}
-header{background:#fff;border-bottom:1px solid var(--border);position:sticky;top:0;z-index:10}
-.nav{max-width:1180px;margin:auto;padding:16px 20px;display:flex;align-items:center;justify-content:space-between;gap:20px}
-.logo{font-weight:800;letter-spacing:1px}.logo small{display:block;font-size:10px;letter-spacing:2px;color:var(--accent);margin-top:3px}
-nav{display:flex;gap:18px;align-items:center}nav a{color:var(--text);text-decoration:none;font-size:14px}
-.btn{border:0;border-radius:8px;padding:11px 16px;background:var(--dark);color:#fff}.btn.alt{background:var(--accent)}.btn.light{background:#eee;color:#222}
-.hero{min-height:560px;background:linear-gradient(90deg,rgba(0,0,0,.7),rgba(0,0,0,.2)),url('https://images.unsplash.com/photo-1600607687920-4e2a09cf159d?auto=format&fit=crop&w=1800&q=80') center/cover;display:flex;align-items:center;color:#fff}
-.hero-inner{max-width:1180px;margin:auto;width:100%;padding:60px 20px}.eyebrow{letter-spacing:3px;font-size:12px}.hero h1{font-size:clamp(40px,7vw,78px);max-width:700px;margin:15px 0}.hero p{max-width:580px;color:#eee;font-size:18px;line-height:1.6}
-section{max-width:1180px;margin:auto;padding:75px 20px}.section-head{display:flex;justify-content:space-between;align-items:end;margin-bottom:28px}.section-head h2{margin:0;font-size:34px}.muted{color:var(--muted)}
-.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:22px}.card{background:var(--card);border:1px solid var(--border);border-radius:14px;overflow:hidden}.card img{width:100%;height:220px;object-fit:cover}.card-body{padding:18px}.tag{font-size:11px;color:var(--accent);font-weight:700;text-transform:uppercase;letter-spacing:1px}.card h3{margin:8px 0}.about{display:grid;grid-template-columns:1fr 1fr;gap:40px;align-items:center}.about img{width:100%;border-radius:16px;height:420px;object-fit:cover}.checks{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:25px 0}.check{background:#fff;padding:14px;border:1px solid var(--border);border-radius:10px}.cta{background:var(--dark);color:#fff;border-radius:18px;padding:50px}.cta p{color:#ccc}
-footer{background:#201e1c;color:#fff;padding:40px 20px}.footer-inner{max-width:1180px;margin:auto;display:flex;justify-content:space-between;gap:30px}.footer-inner p{color:#bbb}
-.modal{position:fixed;inset:0;background:rgba(0,0,0,.65);display:flex;align-items:center;justify-content:center;padding:20px;z-index:100}.modal-box{background:#fff;border-radius:14px;max-width:500px;width:100%;padding:28px}.modal-box input,.modal-box textarea,.modal-box select{width:100%;padding:12px;border:1px solid #ddd;border-radius:8px;margin:7px 0 15px}.modal-box h2{margin-top:0}.actions{display:flex;gap:10px;justify-content:flex-end}
+:root{--bg:#f6f3ee;--card:#fff;--text:#201e1c;--muted:#777;--accent:#8b5e3c;--dark:#24211f;--line:#e5dfd8}
+*{box-sizing:border-box}body{margin:0;font-family:Arial,sans-serif;background:var(--bg);color:var(--text)}a{text-decoration:none;color:inherit}
+header{background:#fff;border-bottom:1px solid var(--line);position:sticky;top:0;z-index:20}.nav{max-width:1200px;margin:auto;padding:15px 20px;display:flex;align-items:center;justify-content:space-between}.logo{font-weight:800;letter-spacing:1px}.logo small{display:block;font-size:9px;color:var(--accent);letter-spacing:2px;margin-top:4px}nav{display:flex;gap:18px;align-items:center}nav a{font-size:14px}.btn{border:0;border-radius:8px;padding:11px 16px;background:var(--dark);color:#fff;cursor:pointer}.btn.alt{background:var(--accent)}.btn.light{background:#eee;color:#222}
+.hero{min-height:570px;background:linear-gradient(90deg,#000b,#0002),url("https://images.unsplash.com/photo-1600607687920-4e2a09cf159d?auto=format&fit=crop&w=1800&q=80") center/cover;display:flex;align-items:center;color:#fff}.hero-in{max-width:1200px;width:100%;margin:auto;padding:60px 20px}.eyebrow,.tag{font-size:11px;text-transform:uppercase;letter-spacing:2px;color:var(--accent);font-weight:700}.hero .eyebrow{color:#ddd}.hero h1{font-size:clamp(42px,7vw,78px);max-width:760px;margin:14px 0}.hero p{max-width:620px;font-size:18px;line-height:1.6;color:#eee}
+section{max-width:1200px;margin:auto;padding:75px 20px}.head{display:flex;justify-content:space-between;align-items:end;margin-bottom:25px}.head h2{margin:6px 0 0;font-size:34px}.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}.card{background:#fff;border:1px solid var(--line);border-radius:14px;overflow:hidden}.card img{width:100%;height:220px;object-fit:cover}.body{padding:18px}.muted{color:var(--muted);line-height:1.6}.about{display:grid;grid-template-columns:1fr 1fr;gap:45px;align-items:center}.about img{width:100%;height:420px;object-fit:cover;border-radius:16px}.checks{display:grid;grid-template-columns:1fr 1fr;gap:10px}.check{background:#fff;border:1px solid var(--line);padding:13px;border-radius:9px}.cta{background:var(--dark);color:#fff;border-radius:18px;padding:50px}.cta p{color:#ccc}
+footer{background:#211f1d;color:#fff;padding:40px 20px}.footer-in{max-width:1200px;margin:auto;display:flex;justify-content:space-between}.footer-in p{color:#aaa}.modal{position:fixed;inset:0;background:#0009;display:flex;align-items:center;justify-content:center;padding:20px;z-index:100}.hidden{display:none!important}.box{background:#fff;border-radius:14px;padding:25px;width:min(500px,100%)}input,select,textarea{width:100%;padding:11px;border:1px solid #ddd;border-radius:8px;margin:6px 0 14px}.actions{display:flex;gap:8px;justify-content:flex-end}
+#admin{display:none}.admin{display:grid;grid-template-columns:235px 1fr;min-height:100vh}.side{background:#24211f;color:#fff;padding:20px}.side button{display:block;width:100%;text-align:left;background:transparent;border:0;color:#ddd;padding:12px;border-radius:8px;margin:3px 0;cursor:pointer}.side button:hover{background:#3a3430}.main{padding:30px;max-width:1450px;width:100%}.top{display:flex;justify-content:space-between;align-items:center}.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:15px}.stat,.panel{background:#fff;border:1px solid var(--line);border-radius:12px;padding:20px}.stat b{font-size:30px;display:block;margin-top:8px}.panel{margin-top:18px}.table{width:100%;border-collapse:collapse}.table th,.table td{padding:12px;border-bottom:1px solid var(--line);text-align:left;font-size:14px}.pill{background:#eee;border-radius:20px;padding:5px 9px;font-size:11px}.done{background:#e4f2e8;color:#27623a}.empty{text-align:center;padding:25px;color:#888}.upload-preview{max-width:140px;max-height:90px;border-radius:8px}
+@media(max-width:800px){nav{display:none}.grid,.about{grid-template-columns:1fr}.stats{grid-template-columns:1fr 1fr}.admin{grid-template-columns:1fr}.footer-in{flex-direction:column;gap:10px}}
+</style></head><body>
+<div id="site">
+<header><div class="nav"><div class="logo">AK INTERIOR DESIGN<small>CARPENTRY • INTERIORS • CRAFT</small></div>
+<nav><a href="#home">Home</a><a href="#services">Services</a><a href="#projects">Projects</a><a href="#gallery">Gallery</a><a href="#about">About</a><a href="#contact">Contact</a><button class="btn alt" onclick="loginModal()">Manager Login</button></nav></div></header>
+<main><section class="hero" id="home"><div class="hero-in"><div class="eyebrow">AK INTERIOR DESIGN</div><h1>Beautiful spaces, crafted with care.</h1><p>Quality carpentry, custom furniture and interior work for homes, offices and modern spaces.</p><a class="btn alt" href="#projects">View Our Work</a> <a class="btn" href="#contact">Contact Us</a></div></section>
+<section id="services"><div class="head"><div><div class="tag">What we do</div><h2>Our Services</h2></div></div><div class="grid" id="servicesGrid"></div></section>
+<section id="projects"><div class="head"><div><div class="tag">Selected work</div><h2>Our Projects</h2></div></div><div class="grid" id="projectsGrid"></div></section>
+<section id="gallery"><div class="head"><div><div class="tag">Work in pictures</div><h2>Photo & Video Gallery</h2></div></div><div class="grid" id="mediaGrid"></div></section>
+<section id="about"><div class="about"><img src="https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?auto=format&fit=crop&w=1200&q=80"><div><div class="tag">About us</div><h2>AK INTERIOR DESIGN</h2><p class="muted">Professional carpentry and interior work with a focus on practical design, clean finishing and custom solutions.</p><div class="checks"><div class="check">✓ Quality Work</div><div class="check">✓ Custom Designs</div><div class="check">✓ Skilled Work</div><div class="check">✓ Professional Finishing</div></div></div></div></section>
+<section id="completed"><div class="head"><div><div class="tag">Finished work</div><h2>Completed Projects</h2></div></div><div class="grid" id="completedGrid"></div></section>
+<section id="contact"><div class="cta"><div class="tag">Let's discuss</div><h2>Planning your next interior project?</h2><p>Contact AK INTERIOR DESIGN to discuss your requirements.</p><a class="btn alt" href="https://wa.me/" target="_blank">WhatsApp</a></div></section></main>
+<footer><div class="footer-in"><div><b>AK INTERIOR DESIGN</b><p>Quality Carpentry & Interior Work</p></div><div><p>© 2026 AK INTERIOR DESIGN</p></div></div></footer></div>
 
-.admin{display:grid;grid-template-columns:230px 1fr;min-height:100vh}.sidebar{background:#24211f;color:#fff;padding:25px 15px}.sidebar .logo{padding:10px 12px 25px}.side-btn{display:block;width:100%;text-align:left;background:transparent;color:#ddd;border:0;padding:12px;border-radius:8px;margin:4px 0}.side-btn.active,.side-btn:hover{background:#3a3430;color:#fff}.admin-main{padding:30px;max-width:1400px;width:100%}.topbar{display:flex;justify-content:space-between;align-items:center;margin-bottom:25px}.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:16px}.stat{background:#fff;border:1px solid var(--border);padding:20px;border-radius:12px}.stat b{display:block;font-size:30px;margin-top:8px}.panel{background:#fff;border:1px solid var(--border);border-radius:12px;padding:20px;margin-top:20px}.table{width:100%;border-collapse:collapse}.table th,.table td{text-align:left;padding:13px;border-bottom:1px solid var(--border);font-size:14px}.form-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}.form-grid .full{grid-column:1/-1}.form-grid input,.form-grid textarea,.form-grid select{width:100%;padding:11px;border:1px solid #ddd;border-radius:8px}.pill{display:inline-block;padding:5px 9px;border-radius:20px;background:#eee;font-size:11px}.pill.done{background:#e4f2e8;color:#28653b}.row-actions{display:flex;gap:7px}.empty{padding:30px;text-align:center;color:#888}
-@media(max-width:800px){nav{display:none}.grid{grid-template-columns:1fr}.about{grid-template-columns:1fr}.stats{grid-template-columns:1fr 1fr}.admin{grid-template-columns:1fr}.sidebar{position:static}.form-grid{grid-template-columns:1fr}.footer-inner{flex-direction:column}.hero{min-height:520px}}
-</style>
-</head>
-<body>
-
-<div id="publicApp">
-<header><div class="nav">
-  <div class="logo">AK INTERIOR DESIGN<small>CARPENTRY • INTERIORS • CRAFT</small></div>
-  <nav>
-    <a href="#home">Home</a><a href="#services">Services</a><a href="#projects">Projects</a><a href="#gallery">Gallery</a><a href="#about">About</a><a href="#contact">Contact</a>
-    <button class="btn alt" onclick="openLogin()">Manager Login</button>
-  </nav>
-</div></header>
-
-<main id="home">
-<section class="hero"><div class="hero-inner">
-  <div class="eyebrow">AK INTERIOR DESIGN</div>
-  <h1>Beautiful spaces, crafted with care.</h1>
-  <p>Quality carpentry, custom furniture and interior work for homes, offices and modern spaces.</p>
-  <a class="btn alt" href="#projects">View Our Work</a>
-  <a class="btn" href="#contact">Contact Us</a>
-</div></section>
-
-<section id="services"><div class="section-head"><div><div class="tag">What we do</div><h2>Our Services</h2></div></div>
-<div class="grid" id="serviceGrid"></div></section>
-
-<section id="projects"><div class="section-head"><div><div class="tag">Selected work</div><h2>Our Projects</h2></div><button class="btn light" onclick="renderProjects()">Refresh</button></div>
-<div class="grid" id="projectGrid"></div></section>
-
-<section id="gallery"><div class="section-head"><div><div class="tag">Work in pictures</div><h2>Photo & Video Gallery</h2></div></div>
-<div class="grid" id="galleryGrid"></div></section>
-
-<section id="about"><div class="about">
-<img src="https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?auto=format&fit=crop&w=1200&q=80">
-<div><div class="tag">About us</div><h2>AK INTERIOR DESIGN</h2><p class="muted">We focus on practical design, clean finishing and custom carpentry that fits the space and the customer.</p>
-<div class="checks"><div class="check">✓ Quality Work</div><div class="check">✓ Custom Designs</div><div class="check">✓ Skilled Work</div><div class="check">✓ Professional Finishing</div></div></div>
-</div></section>
-
-<section id="completed"><div class="section-head"><div><div class="tag">Our finished work</div><h2>Completed Projects</h2></div></div><div class="grid" id="completedGrid"></div></section>
-
-<section id="contact"><div class="cta"><div class="tag">Let's discuss</div><h2>Planning your next interior project?</h2><p>Contact AK INTERIOR DESIGN to discuss your requirements.</p>
-<a class="btn alt" href="https://wa.me/" target="_blank">WhatsApp</a></div></section>
-</main>
-<footer><div class="footer-inner"><div><b>AK INTERIOR DESIGN</b><p>Quality Carpentry & Interior Work</p></div><div><p>Home • Services • Projects • Gallery • Contact</p><p>© 2026 AK INTERIOR DESIGN</p></div></div></footer>
-</div>
-
-<div id="adminApp" class="hidden"></div>
-
-<div id="loginModal" class="modal hidden"><div class="modal-box"><h2>Manager Login</h2><p class="muted">Demo credentials: <b>admin</b> / <b>admin123</b></p>
-<label>Username</label><input id="loginUser" value="admin"><label>Password</label><input id="loginPass" type="password" value="admin123">
-<div class="actions"><button class="btn light" onclick="closeLogin()">Cancel</button><button class="btn alt" onclick="login()">Login</button></div></div></div>
+<div id="admin"><div class="admin"><aside class="side"><div class="logo">AK INTERIOR DESIGN<small>MANAGER PANEL</small></div><button onclick="adminPage('dashboard')">🏠 Dashboard</button><button onclick="adminPage('projects')">📁 Projects</button><button onclick="adminPage('media')">🖼 Photos / Videos</button><button onclick="adminPage('workers')">👷 Workers</button><button onclick="adminPage('payments')">💰 Payments</button><button onclick="signOut()">↩ Public Website</button></aside><main class="main" id="adminMain"></main></div></div>
+<div class="modal hidden" id="loginBox"><div class="box"><h2>Manager Login</h2><p class="muted">Manager account Supabase Authentication se create hoga.</p><input id="email" type="email" placeholder="Manager email"><input id="password" type="password" placeholder="Password"><div class="actions"><button class="btn light" onclick="closeLogin()">Cancel</button><button class="btn alt" onclick="signIn()">Login</button></div><p id="loginMsg" class="muted"></p></div></div>
 
 <script>
-const seed={
-services:[
-{name:"Modular Kitchen",desc:"Custom kitchen carpentry and storage.",img:"https://images.unsplash.com/photo-1600566753086-00f18fb6b3ea?auto=format&fit=crop&w=900&q=80"},
-{name:"Wardrobe",desc:"Built-to-fit wardrobes and storage.",img:"https://images.unsplash.com/photo-1616486338812-3dadae4b4ace?auto=format&fit=crop&w=900&q=80"},
-{name:"Bedroom Interior",desc:"Comfortable, practical bedroom spaces.",img:"https://images.unsplash.com/photo-1616594039964-ae9021a400a0?auto=format&fit=crop&w=900&q=80"},
-{name:"TV Unit",desc:"Custom TV panels and living-room furniture.",img:"https://images.unsplash.com/photo-1618221195710-dd6b41faaea6?auto=format&fit=crop&w=900&q=80"},
-{name:"Wall Panel",desc:"Decorative wall panels and wood detailing.",img:"https://images.unsplash.com/photo-1600210492486-724fe5c67fb0?auto=format&fit=crop&w=900&q=80"},
-{name:"Office Interior",desc:"Functional office and commercial interiors.",img:"https://images.unsplash.com/photo-1497366811353-6870744d04b2?auto=format&fit=crop&w=900&q=80"}],
-projects:[
-{id:1,name:"Sharma House",type:"Complete Home Interior",location:"Zira",status:"Completed",date:"2026-09-15",desc:"Complete interior work including kitchen, wardrobe and TV unit.",img:"https://images.unsplash.com/photo-1600607688969-a5bfcd646154?auto=format&fit=crop&w=1000&q=80"},
-{id:2,name:"Gupta Kitchen",type:"Modular Kitchen",location:"Punjab",status:"Ongoing",date:"2026-09-20",desc:"Custom modular kitchen project.",img:"https://images.unsplash.com/photo-1556911220-bff31c812dba?auto=format&fit=crop&w=1000&q=80"}],
-media:[
-{id:1,type:"photo",title:"Modern Kitchen",url:"https://images.unsplash.com/photo-1556911220-e15b29be8c8f?auto=format&fit=crop&w=900&q=80"},
-{id:2,type:"photo",title:"Bedroom Work",url:"https://images.unsplash.com/photo-1616486338812-3dadae4b4ace?auto=format&fit=crop&w=900&q=80"},
-{id:3,type:"photo",title:"Living Room",url:"https://images.unsplash.com/photo-1600210492486-724fe5c67fb0?auto=format&fit=crop&w=900&q=80"}],
-workers:[{id:1,name:"Raju",phone:"",role:"Carpenter",status:"Active"}],
-payments:[]
-};
-function load(){if(!localStorage.akid){localStorage.akid=JSON.stringify(seed)}return JSON.parse(localStorage.akid)}
-function save(d){localStorage.akid=JSON.stringify(d)}
-function esc(s){return String(s??"").replace(/[&<>"']/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;"}[m]))}
-function renderPublic(){
- const d=load();
- serviceGrid.innerHTML=d.services.map(x=>`<div class="card"><img src="${esc(x.img)}"><div class="card-body"><div class="tag">Service</div><h3>${esc(x.name)}</h3><p class="muted">${esc(x.desc)}</p></div></div>`).join("");
- renderProjects();
- galleryGrid.innerHTML=d.media.map(x=>`<div class="card"><img src="${esc(x.url)}"><div class="card-body"><div class="tag">${x.type}</div><h3>${esc(x.title)}</h3></div></div>`).join("")||'<div class="empty">No gallery items yet.</div>';
- completedGrid.innerHTML=d.projects.filter(x=>x.status==="Completed").map(projectCard).join("")||'<div class="empty">No completed projects yet.</div>';
+const SUPABASE_URL="YOUR_SUPABASE_URL";
+const SUPABASE_ANON_KEY="YOUR_SUPABASE_ANON_KEY";
+let sb=null;if(!SUPABASE_URL.startsWith("YOUR_"))sb=supabase.createClient(SUPABASE_URL,SUPABASE_ANON_KEY);
+const demo=[["Modular Kitchen","Custom kitchen carpentry and storage.","https://images.unsplash.com/photo-1600566753086-00f18fb6b3ea?auto=format&fit=crop&w=900&q=80"],["Wardrobe","Built-to-fit wardrobes and storage.","https://images.unsplash.com/photo-1616486338812-3dadae4b4ace?auto=format&fit=crop&w=900&q=80"],["Bedroom Interior","Comfortable bedroom spaces.","https://images.unsplash.com/photo-1616594039964-ae9021a400a0?auto=format&fit=crop&w=900&q=80"],["TV Unit","Custom TV panels and furniture.","https://images.unsplash.com/photo-1618221195710-dd6b41faaea6?auto=format&fit=crop&w=900&q=80"],["Wall Panel","Decorative wall panels.","https://images.unsplash.com/photo-1600210492486-724fe5c67fb0?auto=format&fit=crop&w=900&q=80"],["Office Interior","Functional office interiors.","https://images.unsplash.com/photo-1497366811353-6870744d04b2?auto=format&fit=crop&w=900&q=80"]];
+const esc=s=>String(s??"").replace(/[&<>"']/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;"}[m]));
+const empty=t=>`<div class="empty">${t}</div>`;
+function loginModal(){if(!sb)return alert("Supabase configure karein: index.html me URL aur anon key.");loginBox.classList.remove("hidden")}function closeLogin(){loginBox.classList.add("hidden")}
+async function signIn(){loginMsg.textContent="";const{error}=await sb.auth.signInWithPassword({email:email.value,password:password.value});if(error)loginMsg.textContent=error.message;else{closeLogin();showAdmin()}}
+async function signOut(){await sb.auth.signOut();admin.style.display="none";site.style.display="block"}
+async function publicLoad(){if(!sb){servicesGrid.innerHTML=demo.map(x=>`<div class="card"><img src="${x[2]}"><div class="body"><div class="tag">Service</div><h3>${x[0]}</h3><p class="muted">${x[1]}</p></div></div>`).join("");projectsGrid.innerHTML=empty("Supabase connect karne ke baad live projects yahan aayenge.");completedGrid.innerHTML=empty("Supabase connect karne ke baad completed projects yahan aayenge.");mediaGrid.innerHTML=empty("Supabase connect karne ke baad gallery yahan aayegi.");return}
+const[s,p,m]=await Promise.all([sb.from("services").select("*").eq("active",true),sb.from("projects").select("*").order("created_at",{ascending:false}),sb.from("media").select("*").order("created_at",{ascending:false})]);
+if(s.error||p.error||m.error)return publicLoadFallback();
+servicesGrid.innerHTML=(s.data||[]).map(x=>`<div class="card"><img src="${esc(x.image_url||"")}"><div class="body"><div class="tag">Service</div><h3>${esc(x.name)}</h3><p class="muted">${esc(x.description)}</p></div></div>`).join("")||empty("No services yet.");
+projectsGrid.innerHTML=(p.data||[]).map(projectCard).join("")||empty("No projects yet.");completedGrid.innerHTML=(p.data||[]).filter(x=>x.status==="completed").map(projectCard).join("")||empty("No completed projects yet.");
+mediaGrid.innerHTML=(m.data||[]).map(x=>`<div class="card"><img src="${esc(x.thumbnail_url||x.url)}"><div class="body"><div class="tag">${esc(x.type)}</div><h3>${esc(x.title)}</h3>${x.type==="video"?`<a class="btn light" href="${esc(x.url)}" target="_blank">▶ Watch Video</a>`:""}</div></div>`).join("")||empty("No gallery items yet.")}
+function publicLoadFallback(){servicesGrid.innerHTML=demo.map(x=>`<div class="card"><img src="${x[2]}"><div class="body"><h3>${x[0]}</h3><p class="muted">${x[1]}</p></div></div>`).join("")}
+function projectCard(x){return `<div class="card"><img src="${esc(x.cover_image||"")}"><div class="body"><div class="tag">${esc(x.status)}</div><h3>${esc(x.name)}</h3><p class="muted">${esc(x.work_type||"")} • ${esc(x.location||"")}</p></div></div>`}
+async function showAdmin(){site.style.display="none";admin.style.display="block";adminPage("dashboard")}
+async function adminPage(page){const{data:{user}}=await sb.auth.getUser();if(!user)return signOut();if(page==="dashboard"){const[p,w,pay]=await Promise.all([sb.from("projects").select("id,status"),sb.from("workers").select("id"),sb.from("worker_payments").select("amount")]);const ps=p.data||[];adminMain.innerHTML=`<div class="top"><div><div class="tag">Management Panel</div><h1>Dashboard</h1></div><button class="btn alt" onclick="signOut()">Logout</button></div><div class="stats"><div class="stat">Projects<b>${ps.length}</b></div><div class="stat">Completed<b>${ps.filter(x=>x.status==="completed").length}</b></div><div class="stat">Ongoing<b>${ps.filter(x=>x.status==="ongoing").length}</b></div><div class="stat">Workers<b>${(w.data||[]).length}</b></div></div><div class="panel"><h2>Worker Payments</h2><p class="muted">Total recorded: ₹${(pay.data||[]).reduce((a,x)=>a+Number(x.amount||0),0).toLocaleString("en-IN")}</p></div>`}else if(page==="projects")projectsAdmin();else if(page==="media")mediaAdmin();else if(page==="workers")workersAdmin();else if(page==="payments")paymentsAdmin()}
+async function projectsAdmin(){const{data}=await sb.from("projects").select("*").order("created_at",{ascending:false});adminMain.innerHTML=`<div class="top"><h1>Projects</h1><button class="btn alt" onclick="addProject()">+ Add Project</button></div><div class="panel"><table class="table"><tr><th>Project</th><th>Type</th><th>Status</th><th>Action</th></tr>${(data||[]).map(x=>`<tr><td>${esc(x.name)}</td><td>${esc(x.work_type)}</td><td><span class="pill ${x.status==="completed"?"done":""}">${esc(x.status)}</span></td><td><button class="btn light" onclick="del('projects','${x.id}','projects')">Delete</button></td></tr>`).join("")}</table></div>`}
+async function addProject(){let name=prompt("Project name");if(!name)return;let work_type=prompt("Work type","Interior"),location=prompt("Location",""),status=prompt("ongoing or completed","ongoing"),cover_image=prompt("Cover image URL","");const{error}=await sb.from("projects").insert({name,work_type,location,status,cover_image});if(error)alert(error.message);adminPage("projects");publicLoad()}
+async function mediaAdmin(){
+ const {data}=await sb.from("media").select("*").order("created_at",{ascending:false});
+ adminMain.innerHTML=`<div class="top"><h1>Photos / Videos</h1></div>
+ <div class="panel">
+   <h3>Upload new media</h3>
+   <p class="muted">Photo/video select karke directly Supabase Storage me upload karein.</p>
+   <input id="mediaTitle" placeholder="Title">
+   <select id="mediaType"><option value="photo">Photo</option><option value="video">Video</option></select>
+   <input id="mediaFile" type="file" accept="image/*,video/*">
+   <button class="btn alt" onclick="uploadMediaFile()">Upload File</button>
+   <p id="uploadStatus" class="muted"></p>
+ </div>
+ <div class="panel">
+   <h3>Gallery Records</h3>
+   <table class="table"><tr><th>Title</th><th>Type</th><th>Preview</th><th>Action</th></tr>
+   ${(data||[]).map(x=>`<tr>
+      <td>${esc(x.title)}</td><td>${esc(x.type)}</td>
+      <td><a href="${esc(x.url)}" target="_blank">Open</a></td>
+      <td><button class="btn light" onclick="deleteMedia('${x.id}','${esc(x.url)}')">Delete</button></td>
+   </tr>`).join("")}</table>
+ </div>`;
 }
-function projectCard(x){return `<div class="card"><img src="${esc(x.img)}"><div class="card-body"><div class="tag">${esc(x.status)}</div><h3>${esc(x.name)}</h3><p class="muted">${esc(x.type)} • ${esc(x.location)}</p><button class="btn light" onclick="alert(${JSON.stringify(x.desc)})">View Project</button></div></div>`}
-function renderProjects(){projectGrid.innerHTML=load().projects.map(projectCard).join("")}
-function openLogin(){loginModal.classList.remove("hidden")}
-function closeLogin(){loginModal.classList.add("hidden")}
-function login(){if(loginUser.value==="admin"&&loginPass.value==="admin123"){closeLogin();document.getElementById("publicApp").classList.add("hidden");adminApp.classList.remove("hidden");renderAdmin()}else alert("Invalid login")}
-function logout(){adminApp.classList.add("hidden");publicApp.classList.remove("hidden")}
-function renderAdmin(section="dashboard"){
- const d=load(); const pCount=d.projects.length, done=d.projects.filter(x=>x.status==="Completed").length;
- adminApp.innerHTML=`<div class="admin"><aside class="sidebar"><div class="logo">AK INTERIOR DESIGN<small>MANAGER PANEL</small></div>
- <button class="side-btn ${section==="dashboard"?"active":""}" onclick="renderAdmin('dashboard')">🏠 Dashboard</button>
- <button class="side-btn ${section==="projects"?"active":""}" onclick="renderAdmin('projects')">📁 Projects</button>
- <button class="side-btn ${section==="media"?"active":""}" onclick="renderAdmin('media')">🖼 Photos / Videos</button>
- <button class="side-btn ${section==="workers"?"active":""}" onclick="renderAdmin('workers')">👷 Workers</button>
- <button class="side-btn ${section==="payments"?"active":""}" onclick="renderAdmin('payments')">💰 Payments</button>
- <button class="side-btn" onclick="logout()">↩ Public Website</button></aside>
- <main class="admin-main"><div class="topbar"><div><div class="tag">Management Panel</div><h1>${section[0].toUpperCase()+section.slice(1)}</h1></div><button class="btn alt" onclick="logout()">Logout</button></div>${adminContent(section,d,pCount,done)}</main></div>`;
+
+async function uploadMediaFile(){
+ const file=document.getElementById("mediaFile").files[0];
+ const title=document.getElementById("mediaTitle").value.trim() || (file?.name||"Untitled");
+ const type=document.getElementById("mediaType").value;
+ const status=document.getElementById("uploadStatus");
+ if(!file){status.textContent="Pehle photo/video select karein.";return}
+ const max=type==="video"?100*1024*1024:15*1024*1024;
+ if(file.size>max){status.textContent=type==="video"?"Video 100MB se chhota rakhein.":"Photo 15MB se chhota rakhein.";return}
+ status.textContent="Uploading...";
+ const safe=file.name.toLowerCase().replace(/[^a-z0-9._-]/g,"-");
+ const path=`${new Date().getFullYear()}/${crypto.randomUUID()}-${safe}`;
+ const {error:upErr}=await sb.storage.from("ak-media").upload(path,file,{upsert:false,contentType:file.type});
+ if(upErr){status.textContent=upErr.message;return}
+ const {data:pub}=sb.storage.from("ak-media").getPublicUrl(path);
+ const url=pub.publicUrl;
+ const {error:dbErr}=await sb.from("media").insert({
+   type,title,url,thumbnail_url:type==="photo"?url:null
+ });
+ if(dbErr){
+   await sb.storage.from("ak-media").remove([path]);
+   status.textContent=dbErr.message;return
+ }
+ status.textContent="Upload complete.";
+ await mediaAdmin();
+ publicLoad();
 }
-function adminContent(s,d,pCount,done){
- if(s==="dashboard") return `<div class="stats"><div class="stat">Projects<b>${pCount}</b></div><div class="stat">Completed<b>${done}</b></div><div class="stat">Ongoing<b>${pCount-done}</b></div><div class="stat">Workers<b>${d.workers.length}</b></div></div><div class="panel"><h2>Quick Actions</h2><button class="btn alt" onclick="renderAdmin('projects')">+ Add Project</button> <button class="btn light" onclick="renderAdmin('media')">+ Add Photo/Video</button> <button class="btn light" onclick="renderAdmin('workers')">+ Add Worker</button></div>`;
- if(s==="projects") return `<div class="panel"><h2>Add Project</h2><div class="form-grid"><input id="pn" placeholder="Project name"><input id="pt" placeholder="Work type"><input id="pl" placeholder="Location"><select id="ps"><option>Ongoing</option><option>Completed</option></select><input id="pd" type="date"><input id="pi" placeholder="Image URL"><textarea id="px" class="full" placeholder="Description"></textarea></div><br><button class="btn alt" onclick="addProject()">Save Project</button></div><div class="panel"><h2>Projects</h2><table class="table"><tr><th>Name</th><th>Status</th><th>Date</th><th>Action</th></tr>${d.projects.map(x=>`<tr><td>${esc(x.name)}</td><td><span class="pill ${x.status==="Completed"?"done":""}">${esc(x.status)}</span></td><td>${esc(x.date)}</td><td><button class="btn light" onclick="deleteProject(${x.id})">Delete</button></td></tr>`).join("")}</table></div>`;
- if(s==="media") return `<div class="panel"><h2>Add Photo / Video</h2><div class="form-grid"><select id="mt"><option value="photo">Photo</option><option value="video">Video</option></select><input id="mn" placeholder="Title"><input id="mu" class="full" placeholder="Image/video URL"><p class="muted full">For this starter version use a hosted URL. Production version will add secure file storage upload.</p></div><button class="btn alt" onclick="addMedia()">Add</button></div><div class="panel"><h2>Media</h2><table class="table"><tr><th>Title</th><th>Type</th><th>Action</th></tr>${d.media.map(x=>`<tr><td>${esc(x.title)}</td><td>${esc(x.type)}</td><td><button class="btn light" onclick="deleteMedia(${x.id})">Delete</button></td></tr>`).join("")}</table></div>`;
- if(s==="workers") return `<div class="panel"><h2>Add Worker</h2><div class="form-grid"><input id="wn" placeholder="Worker name"><input id="wp" placeholder="Phone"><input id="wr" placeholder="Role"><select id="ws"><option>Active</option><option>Inactive</option></select></div><br><button class="btn alt" onclick="addWorker()">Save Worker</button></div><div class="panel"><h2>Workers</h2><table class="table"><tr><th>Name</th><th>Role</th><th>Phone</th><th>Action</th></tr>${d.workers.map(x=>`<tr><td>${esc(x.name)}</td><td>${esc(x.role)}</td><td>${esc(x.phone)}</td><td><button class="btn light" onclick="deleteWorker(${x.id})">Delete</button></td></tr>`).join("")}</table></div>`;
- if(s==="payments") return `<div class="panel"><h2>Add Worker Payment</h2><div class="form-grid"><select id="pw">${d.workers.map(x=>`<option value="${x.id}">${esc(x.name)}</option>`).join("")}</select><input id="pa" type="number" placeholder="Amount"><input id="pdate" type="date"><input id="pm" placeholder="Payment method"><input id="pnote" class="full" placeholder="Notes"></div><br><button class="btn alt" onclick="addPayment()">Save Payment</button></div><div class="panel"><h2>Payment History</h2><table class="table"><tr><th>Worker</th><th>Amount</th><th>Date</th><th>Method</th></tr>${d.payments.map(x=>{let w=d.workers.find(z=>z.id==x.workerId);return `<tr><td>${esc(w?.name||"Unknown")}</td><td>₹${esc(x.amount)}</td><td>${esc(x.date)}</td><td>${esc(x.method)}</td></tr>`}).join("")||'<tr><td colspan="4">No payments yet.</td></tr>'}</table></div>`;
+
+async function deleteMedia(id,url){
+ if(!confirm("Is photo/video ko delete karna hai?"))return;
+ const {error}=await sb.from("media").delete().eq("id",id);
+ if(error){alert(error.message);return}
+ try{
+   const marker="/storage/v1/object/public/ak-media/";
+   const i=url.indexOf(marker);
+   if(i>=0){
+     const path=decodeURIComponent(url.substring(i+marker.length));
+     await sb.storage.from("ak-media").remove([path]);
+   }
+ }catch(e){}
+ await mediaAdmin(); publicLoad();
 }
-function addProject(){let d=load();d.projects.push({id:Date.now(),name:pn.value,type:pt.value,location:pl.value,status:ps.value,date:pd.value,desc:px.value,img:pi.value||seed.projects[0].img});save(d);renderAdmin('projects');renderPublic()}
-function deleteProject(id){if(confirm("Delete this project?")){let d=load();d.projects=d.projects.filter(x=>x.id!==id);save(d);renderAdmin('projects');renderPublic()}}
-function addMedia(){let d=load();d.media.push({id:Date.now(),type:mt.value,title:mn.value,url:mu.value});save(d);renderAdmin('media');renderPublic()}
-function deleteMedia(id){if(confirm("Delete this media?")){let d=load();d.media=d.media.filter(x=>x.id!==id);save(d);renderAdmin('media');renderPublic()}}
-function addWorker(){let d=load();d.workers.push({id:Date.now(),name:wn.value,phone:wp.value,role:wr.value,status:ws.value});save(d);renderAdmin('workers')}
-function deleteWorker(id){if(confirm("Delete worker?")){let d=load();d.workers=d.workers.filter(x=>x.id!==id);save(d);renderAdmin('workers')}}
-function addPayment(){let d=load();d.payments.push({id:Date.now(),workerId:+pw.value,amount:+pa.value,date:pdate.value,method:pm.value,notes:pnote.value});save(d);renderAdmin('payments')}
-renderPublic();
-</script>
-</body>
-</html>
+
+async function workersAdmin(){const{data}=await sb.from("workers").select("*").order("created_at",{ascending:false});adminMain.innerHTML=`<div class="top"><h1>Workers</h1><button class="btn alt" onclick="addWorker()">+ Add Worker</button></div><div class="panel"><table class="table"><tr><th>Name</th><th>Role</th><th>Phone</th><th>Action</th></tr>${(data||[]).map(x=>`<tr><td>${esc(x.name)}</td><td>${esc(x.role)}</td><td>${esc(x.phone)}</td><td><button class="btn light" onclick="del('workers','${x.id}','workers')">Delete</button></td></tr>`).join("")}</table></div>`}
+async function addWorker(){let name=prompt("Worker name");if(!name)return;let role=prompt("Role","Carpenter"),phone=prompt("Phone","");const{error}=await sb.from("workers").insert({name,role,phone,status:"active"});if(error)alert(error.message);adminPage("workers")}
+async function paymentsAdmin(){const{data}=await sb.from("worker_payments").select("id,amount,payment_date,payment_method,workers(name)").order("payment_date",{ascending:false});adminMain.innerHTML=`<div class="top"><h1>Payments</h1><button class="btn alt" onclick="addPayment()">+ Add Payment</button></div><div class="panel"><table class="table"><tr><th>Worker</th><th>Amount</th><th>Date</th><th>Method</th></tr>${(data||[]).map(x=>`<tr><td>${esc(x.workers?.name)}</td><td>₹${Number(x.amount).toLocaleString("en-IN")}</td><td>${esc(x.payment_date)}</td><td>${esc(x.payment_method||"")}</td></tr>`).join("")}</table></div>`}
+async function addPayment(){const{data:w}=await sb.from("workers").select("id,name");if(!w?.length)return alert("Add a worker first.");let worker=prompt("Worker ID:\n"+w.map(x=>`${x.id} - ${x.name}`).join("\n")),amount=prompt("Amount"),date=prompt("Date YYYY-MM-DD",new Date().toISOString().slice(0,10)),method=prompt("Payment method","Cash");if(!worker||!amount)return;const{error}=await sb.from("worker_payments").insert({worker_id:worker,amount:Number(amount),payment_date:date,payment_method:method});if(error)alert(error.message);adminPage("payments")}
+async function del(table,id,page){if(!confirm("Delete this record?"))return;const{error}=await sb.from(table).delete().eq("id",id);if(error)alert(error.message);adminPage(page);publicLoad()}
+publicLoad();
+</script></body></html>
