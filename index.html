@@ -29,8 +29,8 @@ footer{background:#211f1d;color:#fff;padding:40px 20px}.footer-in{max-width:1200
 <div class="modal hidden" id="loginBox"><div class="box"><h2>Manager Login</h2><p class="muted">Manager account Supabase Authentication se create hoga.</p><input id="email" type="email" placeholder="Manager email"><input id="password" type="password" placeholder="Password"><div class="actions"><button class="btn light" onclick="closeLogin()">Cancel</button><button class="btn alt" onclick="signIn()">Login</button></div><p id="loginMsg" class="muted"></p></div></div>
 
 <script>
-const SUPABASE_URL="https://xxxxx.supabase.co";
-const SUPABASE_ANON_KEY="eyJhbGciOi...";
+const SUPABASE_URL="https://ipdnvpmckvgnzjoyaari.supabase.co";
+const SUPABASE_ANON_KEY="sb_publishable_A-_k1CLu80-vRrEl6e7wpg_hIEfop9h";
 let sb=null;if(!SUPABASE_URL.startsWith("YOUR_"))sb=supabase.createClient(SUPABASE_URL,SUPABASE_ANON_KEY);
 const demo=[["Modular Kitchen","Custom kitchen carpentry and storage.","https://images.unsplash.com/photo-1600566753086-00f18fb6b3ea?auto=format&fit=crop&w=900&q=80"],["Wardrobe","Built-to-fit wardrobes and storage.","https://images.unsplash.com/photo-1616486338812-3dadae4b4ace?auto=format&fit=crop&w=900&q=80"],["Bedroom Interior","Comfortable bedroom spaces.","https://images.unsplash.com/photo-1616594039964-ae9021a400a0?auto=format&fit=crop&w=900&q=80"],["TV Unit","Custom TV panels and furniture.","https://images.unsplash.com/photo-1618221195710-dd6b41faaea6?auto=format&fit=crop&w=900&q=80"],["Wall Panel","Decorative wall panels.","https://images.unsplash.com/photo-1600210492486-724fe5c67fb0?auto=format&fit=crop&w=900&q=80"],["Office Interior","Functional office interiors.","https://images.unsplash.com/photo-1497366811353-6870744d04b2?auto=format&fit=crop&w=900&q=80"]];
 const esc=s=>String(s??"").replace(/[&<>"']/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;"}[m]));
