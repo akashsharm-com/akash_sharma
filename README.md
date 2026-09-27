@@ -14,8 +14,8 @@ This is a functional front-end starter/prototype for the requested website.
 - Data persistence with browser localStorage
 
 ## Demo login
-Username: admin
-Password: admin123
+Username: akash_sharma9939
+Password: akash9939
 
 ## Important
 This starter runs entirely in the browser. It is NOT production-secure authentication and does not provide real server-side file storage.
