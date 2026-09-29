@@ -38,9 +38,247 @@ const empty=t=>`<div class="empty">${t}</div>`;
 function loginModal(){if(!sb)return alert("Supabase configure karein: index.html me URL aur anon key.");loginBox.classList.remove("hidden")}function closeLogin(){loginBox.classList.add("hidden")}
 async function signIn(){loginMsg.textContent="";const{error}=await sb.auth.signInWithPassword({email:email.value,password:password.value});if(error)loginMsg.textContent=error.message;else{closeLogin();showAdmin()}}
 async function signOut(){await sb.auth.signOut();admin.style.display="none";site.style.display="block"}
-async function publicLoad(){if(!sb){servicesGrid.innerHTML=demo.map(x=>`<div class="card"><img src="${x[2]}"><div class="body"><div class="tag">Service</div><h3>${x[0]}</h3><p class="muted">${x[1]}</p></div></div>`).join("");projectsGrid.innerHTML=empty("Supabase connect karne ke baad live projects yahan aayenge.");completedGrid.innerHTML=empty("Supabase connect karne ke baad completed projects yahan aayenge.");mediaGrid.innerHTML=empty("Supabase connect karne ke baad gallery yahan aayegi.");return}
-const[s,p,m]=await Promise.all([sb.from("services").select("*").eq("active",true),sb.from("projects").select("*").order("created_at",{ascending:false}),sb.from("media").select("*").order("created_at",{ascending:false})]);
-if(s.error||p.error||m.error)return publicLoadFallback();
+async function publicLoad()async function publicLoad(){
+
+  // =========================
+  // DEMO MODE
+  // =========================
+  if(!sb){
+
+    servicesGrid.innerHTML = demo.map(x => `
+      <div class="card">
+        <img src="${x[2]}">
+        <div class="body">
+          <div class="tag">Service</div>
+          <h3>${x[0]}</h3>
+          <p class="muted">${x[1]}</p>
+        </div>
+      </div>
+    `).join("");
+
+    projectsGrid.innerHTML =
+      empty("Supabase connect karne ke baad live projects yahan aayenge.");
+
+    completedGrid.innerHTML =
+      empty("Supabase connect karne ke baad completed projects yahan aayenge.");
+
+    mediaGrid.innerHTML =
+      empty("Supabase connect karne ke baad gallery yahan aayegi.");
+
+    return;
+  }
+
+
+  // =========================
+  // SERVICES
+  // =========================
+  const { data: servicesData, error: servicesError } =
+    await sb
+      .from("services")
+      .select("*")
+      .eq("active", true);
+
+  if(servicesError){
+
+    console.error("Services Error:", servicesError);
+
+    servicesGrid.innerHTML =
+      empty("Services abhi available nahi hain.");
+
+  }else{
+
+    servicesGrid.innerHTML =
+      (servicesData || []).map(x => `
+        <div class="card">
+
+          <img
+            src="${esc(x.image_url || "")}"
+            alt="${esc(x.name || "")}"
+          >
+
+          <div class="body">
+
+            <div class="tag">
+              Service
+            </div>
+
+            <h3>
+              ${esc(x.name)}
+            </h3>
+
+            <p class="muted">
+              ${esc(x.description)}
+            </p>
+
+          </div>
+
+        </div>
+      `).join("") || empty("No services yet.");
+  }
+
+
+  // =========================
+  // PROJECTS
+  // =========================
+  const { data: projectsData, error: projectsError } =
+    await sb
+      .from("projects")
+      .select("*")
+      .order("created_at", {
+        ascending: false
+      });
+
+
+  if(projectsError){
+
+    console.error("Projects Error:", projectsError);
+
+    projectsGrid.innerHTML =
+      empty("Projects abhi available nahi hain.");
+
+    completedGrid.innerHTML =
+      empty("Completed projects abhi available nahi hain.");
+
+  }else{
+
+    projectsGrid.innerHTML =
+      (projectsData || [])
+        .map(projectCard)
+        .join("") ||
+      empty("No projects yet.");
+
+
+    completedGrid.innerHTML =
+      (projectsData || [])
+        .filter(x => x.status === "completed")
+        .map(projectCard)
+        .join("") ||
+      empty("No completed projects yet.");
+  }
+
+
+  // =========================
+  // PHOTO / VIDEO GALLERY
+  // =========================
+  const { data: mediaData, error: mediaError } =
+    await sb
+      .from("media")
+      .select("*")
+      .order("created_at", {
+        ascending: false
+      });
+
+
+  if(mediaError){
+
+    console.error("Media Error:", mediaError);
+
+    mediaGrid.innerHTML =
+      empty(
+        "Gallery load nahi ho rahi: " +
+        esc(mediaError.message)
+      );
+
+    return;
+  }
+
+
+  // =========================
+  // SHOW GALLERY
+  // =========================
+  mediaGrid.innerHTML =
+    (mediaData || []).map(x => {
+
+      // VIDEO
+      if(x.type === "video"){
+
+        return `
+          <div class="card">
+
+            <video
+              controls
+              preload="metadata"
+              style="
+                width:100%;
+                height:220px;
+                object-fit:cover;
+              "
+            >
+              <source
+                src="${esc(x.url)}"
+              >
+              Your browser does not support video.
+            </video>
+
+
+            <div class="body">
+
+              <div class="tag">
+                VIDEO
+              </div>
+
+              <h3>
+                ${esc(x.title)}
+              </h3>
+
+              <a
+                class="btn light"
+                href="${esc(x.url)}"
+                target="_blank"
+              >
+                ▶ Watch Video
+              </a>
+
+            </div>
+
+          </div>
+        `;
+      }
+
+
+      // PHOTO
+      return `
+        <div class="card">
+
+          <img
+            src="${esc(x.url)}"
+            alt="${esc(x.title)}"
+            loading="lazy"
+            style="
+              width:100%;
+              height:220px;
+              object-fit:cover;
+            "
+          >
+
+
+          <div class="body">
+
+            <div class="tag">
+              PHOTO
+            </div>
+
+            <h3>
+              ${esc(x.title)}
+            </h3>
+
+            <a
+              class="btn light"
+              href="${esc(x.url)}"
+              target="_blank"
+            >
+              View Photo
+            </a>
+
+          </div>
+
+        </div>
+      `;
+
+    }).join("") ||
+
+    empty("No gallery items yet.");
+}
 servicesGrid.innerHTML=(s.data||[]).map(x=>`<div class="card"><img src="${esc(x.image_url||"")}"><div class="body"><div class="tag">Service</div><h3>${esc(x.name)}</h3><p class="muted">${esc(x.description)}</p></div></div>`).join("")||empty("No services yet.");
 projectsGrid.innerHTML=(p.data||[]).map(projectCard).join("")||empty("No projects yet.");completedGrid.innerHTML=(p.data||[]).filter(x=>x.status==="completed").map(projectCard).join("")||empty("No completed projects yet.");
 mediaGrid.innerHTML=(m.data||[]).map(x=>`<div class="card"><img src="${esc(x.thumbnail_url||x.url)}"><div class="body"><div class="tag">${esc(x.type)}</div><h3>${esc(x.title)}</h3>${x.type==="video"?`<a class="btn light" href="${esc(x.url)}" target="_blank">▶ Watch Video</a>`:""}</div></div>`).join("")||empty("No gallery items yet.")}
