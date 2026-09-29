@@ -79,8 +79,8 @@ async function uploadMediaFile(){
  const type=document.getElementById("mediaType").value;
  const status=document.getElementById("uploadStatus");
  if(!file){status.textContent="Pehle photo/video select karein.";return}
- const max=type==="video"?100*1024*1024:15*1024*1024;
- if(file.size>max){status.textContent=type==="video"?"Video 100MB se chhota rakhein.":"Photo 15MB se chhota rakhein.";return}
+ const max=type==="video"?50*1024*1024:15*1024*1024;
+ if(file.size>max){status.textContent=type==="video"?"Video 50MB se chhota rakhein.":"Photo 15MB se chhota rakhein.";return}
  status.textContent="Uploading...";
  const safe=file.name.toLowerCase().replace(/[^a-z0-9._-]/g,"-");
  const path=`${new Date().getFullYear()}/${crypto.randomUUID()}-${safe}`;
